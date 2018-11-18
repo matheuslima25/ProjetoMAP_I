@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Jogador {
@@ -13,8 +13,8 @@ public class Jogador {
   @Id
   private long id;
   private String nome;
-  @OneToMany
-  @JoinColumn(name="cartel_id")
+  @OneToOne
+  @JoinColumn(name="cartela_id")
   private Cartela cartela;
   
   

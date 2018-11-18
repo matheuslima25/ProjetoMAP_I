@@ -5,11 +5,10 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -18,7 +17,7 @@ public class Cartela {
   @GeneratedValue
   @Id
   private long id;
-  @ManyToOne(cascade=CascadeType.ALL, targetEntity= Jogador.class)
+  @ElementCollection(targetClass= Integer.class)
   @javax.persistence.OrderBy("sort")
   private SortedSet<Integer> board;
   private final int NUM = 24;

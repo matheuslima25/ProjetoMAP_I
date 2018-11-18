@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import br.com.bingo.model.Cartela;
 import br.com.bingo.model.Jogador;
-import br.com.bingo.dao.DaoJogador;
+import br.com.bingo.facade.Facade;
 import br.com.bingo.dao.DaoException;
 
 public class Main {
@@ -14,8 +14,8 @@ public class Main {
   public static void main(String[] args) throws DaoException {
     List<Cartela> sorteio = new ArrayList<>();
     Cartela c = new Cartela();
-    Jogador jogador = new Jogador();
-    DaoJogador dao = new DaoJogador();
+    Jogador j = new Jogador();
+    Facade facade = new Facade();
     
     Scanner sc = new Scanner(System.in);
     System.out.println("1. Vender cartela; 0. Sair: ");
@@ -32,14 +32,11 @@ public class Main {
         if(!sorteio.contains(c)) {
           sorteio.add(c);
         }
-        jogador.setNome(nome);
-        jogador.setCartela(c);
-
-        System.out.println(jogador.getNome());
-        System.out.println(jogador.getCartela());
-        System.out.println(jogador.getCartela().getNumeracao());
+        j.setNome(nome);
+        j.setCartela(c);
         
-        dao.save(jogador);
+        facade.salvarCartela(c);
+        facade.salvarJogador(j);
         
         System.out.println("VENDA REALIZADA COM SUCESSO.");
     }
