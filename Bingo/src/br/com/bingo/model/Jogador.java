@@ -3,7 +3,8 @@ package br.com.bingo.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Jogador {
@@ -12,7 +13,8 @@ public class Jogador {
   @Id
   private long id;
   private String nome;
-  @OneToOne
+  @OneToMany
+  @JoinColumn(name="cartel_id")
   private Cartela cartela;
   
   
