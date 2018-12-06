@@ -1,15 +1,20 @@
 package br.com.bingo.dao;
 
+import br.com.bingo.model.Jogador;
+
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import br.com.bingo.model.Jogador;
 
 public class DaoJogador extends DaoGenericAbs<Jogador> {
- 
+  
+  /**
+   * Método que busca os jogadores no banco de dados com o Criteria.
+   * 
+   */
   public List<Jogador> busca(String nome) throws DaoException {
     try {
       Criteria criteria = getCriteria();

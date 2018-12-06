@@ -1,5 +1,7 @@
 package br.com.bingo.dao;
 
+import br.com.bingo.util.PersistenceUtil;
+
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -9,18 +11,26 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
-import br.com.bingo.util.PersistenceUtil;
 
 public abstract class DaoGenericAbs<T> implements IDaoGeneric<T> {
 
   EntityManager manager;
   private Class classe;
 
+  /**
+   * Método que cria uma nova classe generica T e inicia a unidade de persistencia.
+   * 
+   */
   public DaoGenericAbs() {
     manager = PersistenceUtil.getEntityManager();
-    classe = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    classe = (Class<T>) 
+        ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
   }
   
+  /**
+   * Método que salva um novo elemento T generico.
+   * 
+   */
   public void save(T t) throws DaoException {
     try {
       manager.getTransaction().begin();
@@ -33,6 +43,10 @@ public abstract class DaoGenericAbs<T> implements IDaoGeneric<T> {
     }
   }
 
+  /**
+   * Método que atualiza determinado elemento T generico.
+   * 
+   */
   public void update(T t) throws DaoException {
     try {
       manager.getTransaction().begin();
@@ -45,6 +59,10 @@ public abstract class DaoGenericAbs<T> implements IDaoGeneric<T> {
     }
   }
 
+  /**
+   * Método que busca determinado elemento T generico.
+   * 
+   */
   public T find(Long id) throws DaoException {
     try {
       return (T) manager.find(this.classe, id);
@@ -54,7 +72,11 @@ public abstract class DaoGenericAbs<T> implements IDaoGeneric<T> {
       throw new DaoException("...");
     }
   }
-
+  
+  /**
+   * Método que exclui determinado elemento T generico.
+   * 
+   */
   public void remove(T t) throws DaoException {
     try {
       manager.getTransaction().begin();
@@ -66,7 +88,11 @@ public abstract class DaoGenericAbs<T> implements IDaoGeneric<T> {
       throw new DaoException("...");
     }
   }
-
+  
+  /**
+   * Método que lista todos os elementos T genericos.
+   * 
+   */
   public List<T> all() throws DaoException {
     try {
       Criteria criteria = getCriteria();

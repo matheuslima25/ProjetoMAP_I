@@ -6,12 +6,12 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 /**
-*
-* @author Matheus
-*/
-
+ * Classe que gere a unidade de persistencia.
+ *
+ * @author Matheus
+ */
 public class PersistenceUtil {
-  
+
 
   private static final String PERSISTENCE_UNIT_NAME = "BingoPU";
   private static EntityManagerFactory entityManagerFactory = null;
@@ -21,38 +21,47 @@ public class PersistenceUtil {
   }
 
   static {
-      try {
-          entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
+    try {
+      entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   //SINGLETON
+  /**
+   * Método que abre a conexão com o banco de dados.
+   * 
+   */
   public static EntityManager getEntityManager() {
-      try {
-          if (entityManager == null || !entityManager.isOpen()) {
-              entityManager = entityManagerFactory.createEntityManager();
-          }
-          return entityManager;
-      } catch (Exception e) {
-          e.printStackTrace();
-          return null;
+    try {
+      if (entityManager == null || !entityManager.isOpen()) {
+        entityManager = entityManagerFactory.createEntityManager();
       }
+      return entityManager;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
   }
+
   
+  /**
+   * Método que fecha a conexão com o banco de dados.
+   * 
+   */
   public static void closeEntityManager() {
     try {
-        if (entityManager != null) {
-            EntityTransaction transaction = entityManager.getTransaction();
-            if (transaction.isActive()) {
-                transaction.commit();
-            }
+      if (entityManager != null) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        if (transaction.isActive()) {
+          transaction.commit();
         }
+      }
     } catch (Exception e) {
-        e.printStackTrace();
+      e.printStackTrace();
     } finally {
-        entityManager.close();
+      entityManager.close();
     }
   }
 
